@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/craigomac/ASValueTrackingSlider"
   s.license          = { :type => 'MIT', :file => 'LICENSE' }  
   s.platform         = :ios, '6.0'
-  s.source           = { :git => "https://github.com/craigomac/ASValueTrackingSlider.git" :tag => "0.9.5" }
+  s.source           = { :git => "https://github.com/craigomac/ASValueTrackingSlider.git", :tag => "0.9.5" }
   s.source_files     = 'ASValueTrackingSlider'
   s.requires_arc     = true
 
