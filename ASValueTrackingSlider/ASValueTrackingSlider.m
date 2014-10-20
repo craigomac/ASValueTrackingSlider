@@ -76,6 +76,11 @@
     [self calculatePopUpViewSize];
 }
 
+- (void)setPopUpDistance:(CGFloat)popUpDistance
+{
+    self.popUpView.positionOffset = CGPointMake(0.f, -popUpDistance);
+}
+
 // return the currently displayed color if possible, otherwise return _popUpViewColor
 // if animated colors are set, the color will change each time the slider value changes
 - (UIColor *)popUpViewColor
@@ -122,6 +127,12 @@
 {
     _popUpViewCornerRadius = popUpViewCornerRadius;
     [self.popUpView setCornerRadius:popUpViewCornerRadius];
+}
+
+- (void)setPopUpPadding:(CGFloat)popUpPadding
+{
+    _popUpPadding = popUpPadding;
+    [self.popUpView setPadding:popUpPadding];
 }
 
 // when either the min/max value or number formatter changes, recalculate the popUpView width
@@ -187,7 +198,7 @@
 
 - (void)setup
 {
-    _autoAdjustTrackColor = YES;
+    _autoAdjustTrackColor = NO;
     _valueRange = self.maximumValue - self.minimumValue;
     _popUpViewAlwaysOn = NO;
 

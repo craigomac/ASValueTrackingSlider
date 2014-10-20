@@ -27,7 +27,7 @@
 }
 @end
 
-const float ARROW_LENGTH = 13.0;
+const float ARROW_LENGTH = 5.0;
 const float POPUPVIEW_WIDTH_PAD = 1.15;
 const float POPUPVIEW_HEIGHT_PAD = 1.1;
 
@@ -86,10 +86,10 @@ NSString *const FillColorAnimation = @"fillColor";
         
         CABasicAnimation *defaultTextLayerAnim = [CABasicAnimation animation];
         defaultTextLayerAnim.duration = 0.25;
-        _textLayer.actions = @{@"contents" : defaultTextLayerAnim};
-        
+        _textLayer.actions = @{ @"contents" : defaultTextLayerAnim };
+
         _colorAnimLayer = [CAShapeLayer layer];
-        
+
         [self.layer addSublayer:_colorAnimLayer];
         [self.layer addSublayer:_textLayer];
         
@@ -102,6 +102,13 @@ NSString *const FillColorAnimation = @"fillColor";
 {
     if (_cornerRadius == radius) return;
     _cornerRadius = radius;
+    _pathLayer.path = [self pathForRect:self.bounds withArrowOffset:_arrowCenterOffset].CGPath;
+}
+
+- (void)setPadding:(CGFloat)padding
+{
+    if (_padding == padding) return;
+    _padding = padding;
     _pathLayer.path = [self pathForRect:self.bounds withArrowOffset:_arrowCenterOffset].CGPath;
 }
 
@@ -186,7 +193,7 @@ NSString *const FillColorAnimation = @"fillColor";
     
     CGFloat anchorX = 0.5+(arrowOffset/CGRectGetWidth(frame));
     self.layer.anchorPoint = CGPointMake(anchorX, 1);
-    self.layer.position = CGPointMake(CGRectGetMinX(frame) + CGRectGetWidth(frame)*anchorX, 0);
+    self.layer.position = CGPointMake(CGRectGetMinX(frame) + CGRectGetWidth(frame)*anchorX + self.positionOffset.x, self.positionOffset.y);
     self.layer.bounds = (CGRect){CGPointZero, frame.size};
     
     [self setText:text];
@@ -231,8 +238,7 @@ NSString *const FillColorAnimation = @"fillColor";
         
         [self.layer animateKey:@"transform" fromValue:fromValue toValue:[NSValue valueWithCATransform3D:CATransform3DIdentity]
                      customize:^(CABasicAnimation *animation) {
-                         animation.duration = 0.4;
-                         animation.timingFunction = [CAMediaTimingFunction functionWithControlPoints:0.8 :2.5 :0.35 :0.5];
+                         animation.duration = 0.1;
          }];
         
         [self.layer animateKey:@"opacity" fromValue:nil toValue:@1.0 customize:^(CABasicAnimation *animation) {
@@ -252,12 +258,11 @@ NSString *const FillColorAnimation = @"fillColor";
             [self.layer animateKey:@"transform" fromValue:nil
                            toValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.5, 0.5, 1)]
                          customize:^(CABasicAnimation *animation) {
-                             animation.duration = 0.55;
-                             animation.timingFunction = [CAMediaTimingFunction functionWithControlPoints:0.1 :-2 :0.3 :3];
+                             animation.duration = 0.1;
                          }];
             
             [self.layer animateKey:@"opacity" fromValue:nil toValue:@0.0 customize:^(CABasicAnimation *animation) {
-                animation.duration = 0.75;
+                animation.duration = 0.1;
             }];
         } else { // not animated - just set opacity to 0.0
             self.layer.opacity = 0.0;
@@ -286,6 +291,8 @@ NSString *const FillColorAnimation = @"fillColor";
     
     rect = (CGRect){CGPointZero, rect.size}; // ensure origin is CGPointZero
     
+    rect = CGRectInset(rect, -self.padding, -self.padding);
+
     // Create rounded rect
     CGRect roundedRect = rect;
     roundedRect.size.height -= ARROW_LENGTH;

@@ -30,9 +30,12 @@
     self.slider1.maximumValue = 255.0;
     self.slider1.popUpViewCornerRadius = 0.0;
     [self.slider1 setMaxFractionDigitsDisplayed:0];
-    self.slider1.popUpViewColor = [UIColor colorWithHue:0.55 saturation:0.8 brightness:0.9 alpha:0.7];
-    self.slider1.font = [UIFont fontWithName:@"GillSans-Bold" size:22];
-    self.slider1.textColor = [UIColor colorWithHue:0.55 saturation:1.0 brightness:0.5 alpha:1];
+    self.slider1.popUpViewColor = [UIColor colorWithWhite:0.95f alpha:1.f];
+    self.slider1.font = [UIFont systemFontOfSize:16.f];
+    self.slider1.textColor = [UIColor blackColor];
+    self.slider1.popUpDistance = 20.f;
+    self.slider1.popUpViewCornerRadius = 6.0;
+    self.slider1.popUpPadding = 5.f;
 
     
     // customize slider 2

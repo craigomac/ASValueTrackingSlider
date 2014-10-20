@@ -17,6 +17,11 @@
 // the popUpView will not hide again until you call 'hidePopUpViewAnimated:'
 - (void)hidePopUpViewAnimated:(BOOL)animated;
 
+// distance from trackbar
+@property (nonatomic) CGFloat popUpDistance;
+
+@property (nonatomic) CGFloat popUpPadding;
+
 @property (strong, nonatomic) UIColor *textColor;
 
 // font can not be nil, it must be a valid UIFont
